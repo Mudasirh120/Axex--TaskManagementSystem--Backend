@@ -1,5 +1,5 @@
 import e from "express";
-import Client from "../models/clientModel.js";
+import User from "../models/userModel.js";
 import { comparePassword, hashPassword } from "../utils/bcrypt.js";
 import validator from "validator";
 import { createToken, setCookies } from "../utils/jwt.js";
@@ -7,15 +7,15 @@ const authRouter = e.Router();
 authRouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
-    const existingClient = await Client.findOne({ email });
-    if (!existingClient) {
+    const existingUser = await User.findOne({ email });
+    if (!existingUser) {
       return res
         .status(404)
         .json({ success: false, message: "User doesn't exists." });
     }
-    const isMatched = await comparePassword(password, existingClient.password);
+    const isMatched = await comparePassword(password, existingUser.password);
     if (isMatched) {
-      const token = createToken(existingClient.id);
+      const token = createToken(existingUser.id);
       setCookies(res, token);
       return res
         .status(200)
@@ -32,8 +32,8 @@ authRouter.post("/login", async (req, res) => {
 authRouter.post("/register", async (req, res) => {
   const { email, name, password } = req.body;
   try {
-    const existingClient = await Client.findOne({ email });
-    if (existingClient) {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res
         .status(403)
         .json({ success: false, message: "User already exists." });
@@ -47,8 +47,8 @@ authRouter.post("/register", async (req, res) => {
         .status(422)
         .json({ success: false, message: "Please enter a strong password" });
     const hashedPassword = await hashPassword(password);
-    const newClient = new Client({ email, name, password: hashedPassword });
-    await newClient.save();
+    const newUser = new User({ email, name, password: hashedPassword });
+    await newUser.save();
     return res
       .status(201)
       .json({ success: true, message: "User Created Successfully" });
