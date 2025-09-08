@@ -16,6 +16,4 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello World</h1>");
 });
 connectDB();
-app.listen(PORT, () => {
-  console.log(`Server is Running at http://localhost:${PORT}`);
-});
+export default app;
