@@ -10,9 +10,9 @@ export const userLogin = async (req, res) => {
 export const userRegister = async (req, res) => {
   const { email, name, password, role } = req.body;
   const User = returnUser(role);
-  await registerLogic(User, role, res, email, name, password);
+  await registerLogic(User, res, email, name, password);
 };
-const registerLogic = async (User, role, res, email, name, password) => {
+const registerLogic = async (User, res, email, name, password) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -48,7 +48,7 @@ const loginLogic = async (User, role, res) => {
     }
     const isMatched = await comparePassword(password, existingUser.password);
     if (isMatched) {
-      const token = createToken(existingUser.id);
+      const token = createToken(`${existingUser.id}${role}`);
       setCookies(res, token);
       return res
         .status(200)
