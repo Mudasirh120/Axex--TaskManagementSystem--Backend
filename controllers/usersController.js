@@ -1,6 +1,6 @@
 import validator from "validator";
 import { comparePassword, hashPassword } from "../utils/bcrypt.js";
-import { createToken, setCookies } from "../utils/jwt.js";
+import { clearCookie, createToken, setCookies } from "../utils/jwt.js";
 import { returnUser } from "../utils/UserSelector.js";
 export const userLogin = async (req, res) => {
   const { email, password, role } = req.body;
@@ -11,6 +11,12 @@ export const userRegister = async (req, res) => {
   const { email, name, password, role } = req.body;
   const User = returnUser(role);
   await registerLogic(User, res, email, name, password);
+};
+export const userLogout = (req, res) => {
+  clearCookie(res);
+  return res
+    .status(200)
+    .json({ sucess: true, message: "User Logged out successfully" });
 };
 const registerLogic = async (User, res, email, name, password) => {
   try {

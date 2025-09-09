@@ -1,4 +1,5 @@
 import { verifyToken } from "../utils/jwt.js";
+import { returnUser } from "../utils/UserSelector.js";
 export const authClient = (req, res) => {
   authUser(req, res);
 };
@@ -13,8 +14,8 @@ export const authUser = async (req, res) => {
     const token = req.cookies.accessToken;
     if (!token) return res.json({ success: false, message: "Not Authorized" });
     const decoded = verifyToken(token);
-    const id = originalString.substring(0, 23);
-    const role = originalString.substring(23);
+    const id = decoded.substring(0, 24);
+    const role = decoded.substring(24);
     const User = returnUser(role);
     const userExists = await User.findById(id);
     if (userExists) {
