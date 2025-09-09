@@ -7,6 +7,7 @@ import cors from "cors";
 import clientRouter from "./routes/clientRoute.js";
 import adminsRouter from "./routes/adminsRoute.js";
 import assistantRouter from "./routes/assistantRoute.js";
+import authRouter from "./routes/authRoute.js";
 const app = express();
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.urlencoded({ extended: true }));

@@ -5,7 +5,7 @@ import { returnUser } from "../utils/UserSelector.js";
 export const userLogin = async (req, res) => {
   const { email, password, role } = req.body;
   const User = returnUser(role);
-  await loginLogic(User, role, res);
+  await loginLogic(User, role, res, email, password);
 };
 export const userRegister = async (req, res) => {
   const { email, name, password, role } = req.body;
@@ -38,7 +38,7 @@ const registerLogic = async (User, res, email, name, password) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
-const loginLogic = async (User, role, res) => {
+const loginLogic = async (User, role, res, email, password) => {
   try {
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
