@@ -10,9 +10,9 @@ export const userLogin = async (req, res) => {
 export const userRegister = async (req, res) => {
   const { email, name, password, role } = req.body;
   const User = returnUser(role);
-  await registerLogic(User, role, res);
+  await registerLogic(User, role, res, email, name, password);
 };
-const registerLogic = async (User, role, res) => {
+const registerLogic = async (User, role, res, email, name, password) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {

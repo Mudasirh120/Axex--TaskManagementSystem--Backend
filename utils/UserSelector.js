@@ -1,5 +1,5 @@
-import Client from "../models/clientModel";
-import Assistant from "../models/assistantModel";
+import Client from "../models/clientModel.js";
+import Assistant from "../models/assistantModel.js";
 export const returnUser = (role) => {
   if (role === "client") {
     return Client;

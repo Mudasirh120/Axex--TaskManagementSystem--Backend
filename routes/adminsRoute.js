@@ -1,5 +1,5 @@
 import e from "express";
 import { userLogin } from "../controllers/usersController.js";
-const adminRouter = e.Router();
-usersRouter.post("/login", userLogin);
-export default adminRouter;
+const adminsRouter = e.Router();
+adminsRouter.post("/login", userLogin);
+export default adminsRouter;
