@@ -16,7 +16,7 @@ export const userLogout = (req, res) => {
   clearCookie(res);
   return res
     .status(200)
-    .json({ sucess: true, message: "User Logged out successfully" });
+    .json({ success: true, message: "User Logged out successfully" });
 };
 const registerLogic = async (User, res, email, name, password) => {
   try {
@@ -58,7 +58,7 @@ const loginLogic = async (User, role, res, email, password) => {
       setCookies(res, token);
       return res
         .status(200)
-        .json({ success: true, message: "User Logged In Successfully" });
+        .json({ success: true, message: "User Logged In Successfully", role });
     } else {
       return res
         .status(401)

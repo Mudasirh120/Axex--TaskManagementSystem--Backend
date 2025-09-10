@@ -1,14 +1,5 @@
 import { verifyToken } from "../utils/jwt.js";
 import { returnUser } from "../utils/UserSelector.js";
-export const authClient = (req, res) => {
-  authUser(req, res);
-};
-export const authAssistant = (req, res) => {
-  authUser(req, res);
-};
-export const authAdmin = (req, res) => {
-  authUser(req, res);
-};
 export const authUser = async (req, res) => {
   try {
     const token = req.cookies.accessToken;
@@ -19,7 +10,9 @@ export const authUser = async (req, res) => {
     const User = returnUser(role);
     const userExists = await User.findById(id);
     if (userExists) {
-      return res.status(200).json({ success: true, message: "Authorized" });
+      return res
+        .status(200)
+        .json({ success: true, message: "Authorized", role });
     } else {
       return res.json({ success: false, message: "Fake token" });
     }
