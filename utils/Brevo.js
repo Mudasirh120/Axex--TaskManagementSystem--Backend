@@ -5,7 +5,8 @@ const sendMail = async (address, name) => {
     emailAPI.authentications.apiKey.apiKey = process.env.BREVO_API_KEY;
     let message = new SendSmtpEmail();
     message.subject = "First email";
-    message.textContent = "Hello world!";
+    message.textContent =
+      "Thank you for choosing Axex Solutions. We are glad to have you onboard.";
     message.sender = {
       name: "Axex Solutions",
       email: "trainingaxex@gmail.com",
